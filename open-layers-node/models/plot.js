@@ -9,6 +9,7 @@ const plotSchema = mongoose.Schema(
     name: { type: String, required: true },
     plotId: { type: Number, required: true },
     coords: { type: [], required: true },
+    geometry: { type: [], required: true },
   },
   { collection: "percelen" }
 );
