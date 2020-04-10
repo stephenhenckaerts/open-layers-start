@@ -75,19 +75,18 @@ router.delete("/percelen/:id", (req, res) => {
 });
 
 router.put("/percelen", (req, res) => {
-  Plot.find({ plotId: req.params.id }, (err, plot) => {
-    plot.plotId = req.body.plotId;
+  Plot.findOne({ plotId: req.body.plotId }, (err, plot) => {
     plot.coords = req.body.coords;
     plot.name = req.body.name;
     plot.area = req.body.area;
     plot.cropGroupName = req.body.cropGroupName;
     plot.cropName = req.body.cropName;
     plot.comments = req.body.comments;
+    plot.geometry = req.body.geometry;
 
     plot.save((saveErr, savePlot) => {
       if (saveErr) res.send(saveErr);
-
-      res.send(savePlot);
+      res.json(savePlot);
     });
   });
 });
