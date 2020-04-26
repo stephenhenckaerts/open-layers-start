@@ -10,7 +10,7 @@ var app = express();
 // configuratie van body-parser
 app.use(bodyParser.json());
 
-// nodig voor de toegang vanuit onze angular applicatie - CORS
+// nodig voor de toegang vanuit onze react applicatie - CORS
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
