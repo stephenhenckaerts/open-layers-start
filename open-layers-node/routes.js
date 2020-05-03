@@ -55,6 +55,7 @@ router.post("/percelen", (req, res) => {
     cropName: req.body.cropName,
     comments: req.body.comments,
     geometry: req.body.geometry,
+    shapefile: "None",
   });
 
   plot.save((err, plot) => {
