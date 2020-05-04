@@ -126,4 +126,8 @@ router.post("/uploadShapefile/:id", (req, res) => {
   });
 });
 
+router.get("/getShapefile/:id", (req, res) => {
+  res.sendFile("Wimmertingen.geojson", { root: __dirname });
+});
+
 module.exports = router;
