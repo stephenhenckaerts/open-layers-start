@@ -2,6 +2,7 @@ const express = require("express");
 var router = express.Router();
 var Plot = require("./models/plot");
 var db = require("./db");
+var multer = require("multer");
 
 const app = express();
 
@@ -88,6 +89,39 @@ router.put("/percelen", (req, res) => {
     plot.save((saveErr, savePlot) => {
       if (saveErr) res.send(saveErr);
       res.json(savePlot);
+    });
+  });
+});
+
+router.post("/uploadShapefile/:id", (req, res) => {
+  let filename = "";
+  var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "public");
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+      filename = file.originalname;
+    },
+  });
+
+  var upload = multer({ storage: storage }).single("file");
+
+  upload(req, res, function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json(err);
+    } else if (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+
+    Plot.findOne({ plotId: req.params.id }, (err, plot) => {
+      plot.shapefile = filename;
+
+      plot.save((saveErr, savePlot) => {
+        if (saveErr) res.send(saveErr);
+        return res.status(200).send(req.file);
+      });
     });
   });
 });

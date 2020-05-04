@@ -23,7 +23,7 @@ app.get("/map/*", (req, res) => {
 
 app.get("/json/*", (req, res) => {
   var fs = require("fs");
-  res.json(JSON.parse(fs.readFileSync("Wimmertingen.geojson")));
+  res.json(JSON.parse(fs.readFileSync("public/Wimmertingen.geojson")));
 });
 
 module.exports = app;
