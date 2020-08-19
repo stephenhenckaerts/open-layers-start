@@ -1,6 +1,7 @@
 // server.js - app voor boeken in MongoDB
 var express = require("express");
 var bodyParser = require("body-parser");
+require("dotenv").config();
 
 var routes = require("./routes");
 var maps = require("./node");
