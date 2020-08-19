@@ -56,7 +56,7 @@ router.post("/percelen", (req, res) => {
     cropName: req.body.cropName,
     comments: req.body.comments,
     geometry: req.body.geometry,
-    shapefile: "None",
+    shapefile: [],
   });
 
   plot.save((err, plot) => {
@@ -116,7 +116,7 @@ router.post("/uploadShapefile/:id", (req, res) => {
     }
 
     Plot.findOne({ plotId: req.params.id }, (err, plot) => {
-      plot.shapefile = filename;
+      plot.shapefile.push(filename);
 
       plot.save((saveErr, savePlot) => {
         if (saveErr) res.send(saveErr);
@@ -126,8 +126,9 @@ router.post("/uploadShapefile/:id", (req, res) => {
   });
 });
 
-router.get("/getShapefile/:id", (req, res) => {
-  res.download("public/Wimmertingen.geojson");
+router.get("/getShapefile/:shapefileName", (req, res) => {
+  var fs = require("fs");
+  res.json(JSON.parse(fs.readFileSync("public/" + req.params.shapefileName)));
 });
 
 module.exports = router;
