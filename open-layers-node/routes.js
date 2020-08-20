@@ -131,4 +131,9 @@ router.get("/getShapefile/:shapefileName", (req, res) => {
   res.json(JSON.parse(fs.readFileSync("public/" + req.params.shapefileName)));
 });
 
+router.get("/getBodemscan", (req, res) => {
+  var fs = require("fs");
+  res.json(JSON.parse(fs.readFileSync("public/bodemscans/bodemscan.geojson")));
+});
+
 module.exports = router;
