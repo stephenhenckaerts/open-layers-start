@@ -93,7 +93,7 @@ router.put("/percelen", (req, res) => {
   });
 });
 
-router.post("/uploadShapefile/:id", (req, res) => {
+router.post("/uploadShapefile/:id&:type", (req, res) => {
   let filename = "";
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -116,7 +116,7 @@ router.post("/uploadShapefile/:id", (req, res) => {
     }
 
     Plot.findOne({ plotId: req.params.id }, (err, plot) => {
-      plot.shapefile.push(filename);
+      plot.shapefile.push({ file: filename, type: req.params.type });
 
       plot.save((saveErr, savePlot) => {
         if (saveErr) res.send(saveErr);
